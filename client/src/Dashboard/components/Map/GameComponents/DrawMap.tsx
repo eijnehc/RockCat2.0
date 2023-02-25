@@ -21,7 +21,7 @@ export const DrawMap: FC<{ questionKey: string }> = (props) => {
           for (let j = 0; j < columns; j++) {
             const imageKey = grid[i][j]
             if (imageKey) {
-              const image = document.querySelector(`#mapSquareImage-${imageKey}`)
+              const image = document.querySelector(`#mapSquareImage-${imageKey}`) as CanvasImageSource
               const x = j * MAP_SQUARE_SIZE
               const y = i * MAP_SQUARE_SIZE
               renderingContext.drawImage(
