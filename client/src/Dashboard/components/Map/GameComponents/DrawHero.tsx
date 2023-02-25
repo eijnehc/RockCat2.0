@@ -18,7 +18,7 @@ export const DrawHero: FC<{ questionKey: string }> = () => {
   useEffect(() => {
     if (characterImage && renderingContext) {
       renderingContext.drawImage(
-        document.querySelector(characterImage),
+        document.querySelector(characterImage) as CanvasImageSource,
         0,
         0,
         imageSize,
