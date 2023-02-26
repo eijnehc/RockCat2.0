@@ -6,6 +6,8 @@ const getQuestions = async (req, res) => {
   let questions;
   const questionId = req.query?.id;
   try {
+    // Make sure jwt has the user information so that we can get the
+    // information to the user instead of using this function
     const { data, error } = await supabase_admin.auth.admin.getUserById(
       res.locals.id
     );

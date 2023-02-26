@@ -26,6 +26,8 @@ const addUser = async (req, res) => {
   }
 };
 
+
+// This part can replace with serverless login
 const signIn = async (req, res) => {
   const email = req.query.email;
 
@@ -52,6 +54,8 @@ const signIn = async (req, res) => {
 
 const getUser = async (req, res) => {
   try {
+    // Make sure jwt has the user information so that we can get the
+    // information to the user instead of using this function
     const { data, error } = await supabase_admin.auth.admin.getUserById(
       res.locals.id
     );
@@ -89,6 +93,7 @@ const updateUser = async (req, res) => {
     }
 
     if (currentUser.data[0].email !== email) {
+      // Replace supabase with serverless api here to update email 
       const { data, error } = await supabase_admin.auth.admin.updateUserById(
         res.locals.id,
         {
