@@ -4,6 +4,7 @@ import { useNavigate, useParams } from 'react-router-dom'
 import { useAtom } from 'jotai'
 import styled from 'styled-components'
 
+import { useAuthAtom } from '../../global'
 import { useQuestionsQuery } from '../../Home/apis/hooks'
 import { useCompleteQuestionQuery, useLikeQuestionQuery } from '../apis'
 
@@ -32,7 +33,8 @@ async function sleep(msec: number) {
 export const DashboardContainer: FC = () => {
   const { questionId } = useParams()
   const navigate = useNavigate()
-  const { questions: question, isLoading, refetch } = useQuestionsQuery(Number(questionId))
+  const [auth] = useAuthAtom('access_token')
+  const { questions: question, isLoading, refetch } = useQuestionsQuery(auth?.email, Number(questionId))
   const { mutate } = useCompleteQuestionQuery()
   const { mutate: upVote } = useLikeQuestionQuery()
   const [js, setJs] = useState<string>('')

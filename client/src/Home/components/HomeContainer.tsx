@@ -1,6 +1,6 @@
 import { FC } from 'react'
 
-import { useQuestionsQuery } from '../apis/hooks'
+import { useQuestionsQuery } from '../apis'
 
 import { HomeView } from './HomeView'
 

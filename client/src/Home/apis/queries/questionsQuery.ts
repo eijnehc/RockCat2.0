@@ -2,8 +2,8 @@ import { apiRoutes, apiSettings } from '../../../apiRoutes'
 import { authFetch } from '../../../global'
 import { QuestionsOverview } from '../../interfaces'
 
-export const questionsQuery = async (questionId?: number): Promise<QuestionsOverview> => {
-  const query = questionId ? `?id=${questionId}` : ''
+export const questionsQuery = async (email: string, questionId?: number): Promise<QuestionsOverview> => {
+  const query = questionId ? `?id=${questionId}&email=${email}` : `?email=${email}`
   const { hostName, httpsProtocol } = apiSettings
   let res
 

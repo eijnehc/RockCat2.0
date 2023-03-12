@@ -1,10 +1,11 @@
 import { FC, ReactNode, useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { Menu, MenuButton, MenuItem, MenuList } from '@reach/menu-button'
+import jwt_decode from 'jwt-decode'
 import styled from 'styled-components'
 
 import { useAuthAtom } from '../apis'
-import { useUserQuery } from '../apis/hooks/useUserQuery'
+import { useUserQuery } from '../apis'
 import { Avatar, Logo } from '../components'
 
 interface Props {
@@ -24,10 +25,11 @@ export const PrivateLayout: FC<Props> = ({ children }) => {
     }
 
     if (accessToken) {
-      setAuth(accessToken)
+      const decoded: any = jwt_decode(accessToken)
+      setAuth({ accessToken: accessToken, email: decoded.email })
       navigate('/')
     }
-  }, [auth])
+  }, [auth.email, auth.accessToken])
 
   const redirectHome = () => {
     navigate('/')

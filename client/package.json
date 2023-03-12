@@ -1,7 +1,7 @@
 {
   "name": "rockcat",
   "private": true,
-  "version": "1.0.1",
+  "version": "1.0.2",
   "type": "module",
   "scripts": {
     "start": "vite",
@@ -17,6 +17,7 @@
     "@uiw/react-codemirror": "^4.12.3",
     "eslint-plugin-simple-import-sort": "^8.0.0",
     "jotai": "^1.9.1",
+    "jwt-decode": "^3.1.2",
     "react": "17.0.2",
     "react-dom": "17.0.2",
     "react-feather": "^2.0.10",

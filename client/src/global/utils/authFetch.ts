@@ -5,7 +5,7 @@ export const authFetch = async (input: RequestInfo, init?: RequestInit, isImage?
   const options: RequestInit = init ?? {}
   const defaultHeaders: HeadersInit = {
     'Content-Type': 'application/json',
-    Authorization: `Bearer ${auth}`,
+    Authorization: `Bearer ${auth.accessToken}`,
   }
 
   if (isImage) {
