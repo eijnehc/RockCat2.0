@@ -3,6 +3,7 @@ import { ArrowLeft } from 'react-feather'
 import { Link } from 'react-router-dom'
 import styled, { keyframes } from 'styled-components'
 
+import { version } from '../../../package.json'
 import { Input, Logo } from '../../global'
 import { QUERIES } from '../../global/constant'
 
@@ -60,6 +61,7 @@ export const LoginView: FC<Props> = ({ isSubmitted, isLoading, isValidUser, onSu
           </EmailWrapper>
         )}
       </LoginWrapper>
+      <Version>v{version}</Version>
     </Wrapper>
   )
 }
@@ -246,6 +248,12 @@ const BottomSphere = styled.div`
     #b72eb2 73.63%,
     #81249a 100%
   );
+`
+
+const Version = styled.div`
+  position: fixed;
+  bottom: 1rem;
+  right: 1rem;
 `
 
 LoginView.displayName = 'LoginView'
