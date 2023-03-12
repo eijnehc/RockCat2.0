@@ -18,16 +18,16 @@ export const PrivateLayout: FC<Props> = ({ children }) => {
   const [auth, setAuth] = useAuthAtom('access_token')
   const { user } = useUserQuery()
 
-  // useEffect(() => {
-  //   if (!auth && !accessToken) {
-  //     navigate('/welcome')
-  //   }
+  useEffect(() => {
+    if (!auth && !accessToken) {
+      navigate('/welcome')
+    }
 
-  //   if (accessToken) {
-  //     setAuth(accessToken)
-  //     navigate('/')
-  //   }
-  // }, [auth])
+    if (accessToken) {
+      setAuth(accessToken)
+      navigate('/')
+    }
+  }, [auth])
 
   const redirectHome = () => {
     navigate('/')
@@ -46,7 +46,7 @@ export const PrivateLayout: FC<Props> = ({ children }) => {
     navigate('/welcome')
   }
 
-  // if (!auth) return null
+  if (!auth) return null
 
   return (
     <>

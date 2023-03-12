@@ -1,3 +1,13 @@
+const httpProtocol = 'http'
+const httpsProtocol = 'https'
+const hostName = window.location.hostname === 'localhost' ? '' : window.location.hostname
+
+export const apiSettings = {
+  httpProtocol,
+  httpsProtocol,
+  hostName,
+}
+
 export const apiRoutes = {
   createCheckoutSessionHttpUrl: `/api/v1/create-checkout-session`,
   signUpHttpUrl: (sessionId: string) => `/api/v1/sign-up?session_id=${sessionId}`,
