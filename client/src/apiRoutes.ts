@@ -1,6 +1,7 @@
 const httpProtocol = 'http'
 const httpsProtocol = 'https'
-const hostName = window.location.hostname === 'localhost' ? '' : window.location.hostname
+const hostName =
+  window.location.hostname === 'localhost' ? '' : 'demoalb-968715302.ap-southeast-1.elb.amazonaws.com'
 
 export const apiSettings = {
   httpProtocol,
