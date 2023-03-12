@@ -1,9 +1,9 @@
-const fs = require('fs');
-const formidable = require('formidable');
-const supabase = require('../services/supabase').supabase;
-const supabase_admin = require('../services/supabase').supabase_admin;
-const SUPABASE_URL = require('../services/supabase').SUPABASE_URL;
-const orderSuccess = require('../controllers/transactions').orderSuccess;
+const fs = require("fs");
+const formidable = require("formidable");
+const supabase = require("../services/supabase").supabase;
+const supabase_admin = require("../services/supabase").supabase_admin;
+const SUPABASE_URL = require("../services/supabase").SUPABASE_URL;
+const orderSuccess = require("../controllers/transactions").orderSuccess;
 
 const addUser = async (req, res) => {
   const { stripe_customer_id, customer, receipt_url } = await orderSuccess(
@@ -11,14 +11,14 @@ const addUser = async (req, res) => {
   );
 
   try {
-    const response = await supabase.from('profile').insert({
+    const response = await supabase.from("profile").insert({
       email: customer.email,
       name: customer.name,
       stripe_customer_id: stripe_customer_id,
       receipt_url: receipt_url,
     });
 
-    res.status(200).send({ message: 'Customer Added' });
+    res.status(200).send({ message: "Customer Added" });
   } catch (err) {
     res.status(400).send({
       message: err,
@@ -26,25 +26,24 @@ const addUser = async (req, res) => {
   }
 };
 
-
 // This part can replace with serverless login
 const signIn = async (req, res) => {
   const email = req.query.email;
 
   try {
     const { data } = await supabase
-      .from('profile')
-      .select('*')
-      .eq('email', email)
+      .from("profile")
+      .select("*")
+      .eq("email", email)
       .limit(1);
 
     if (data.length > 0) {
       await supabase.auth.signInWithOtp({ email: email });
     } else {
-      throw 'User not found';
+      throw "User not found";
     }
 
-    res.status(200).send({ message: 'Magic link sent' });
+    res.status(200).send({ message: "Magic link sent" });
   } catch (err) {
     res.status(400).send({
       message: err,
@@ -53,24 +52,16 @@ const signIn = async (req, res) => {
 };
 
 const getUser = async (req, res) => {
+  const email = req.query.email;
+
   try {
-    // Make sure jwt has the user information so that we can get the
-    // information to the user instead of using this function
-    const { data, error } = await supabase_admin.auth.admin.getUserById(
-      res.locals.id
-    );
-
-    if (error) {
-      throw error;
-    }
-
     const response = await supabase
-      .from('profile')
-      .select('*')
-      .eq('email', data.user.email)
+      .from("profile")
+      .select("*")
+      .eq("email", email)
       .limit(1);
 
-    if (response.statusText !== 'OK') {
+    if (response.statusText !== "OK") {
       throw response.error;
     }
 
@@ -86,14 +77,14 @@ const updateUser = async (req, res) => {
   const { name, email, id } = req.body;
 
   try {
-    const currentUser = await supabase.from('profile').select('*').eq('id', id);
+    const currentUser = await supabase.from("profile").select("*").eq("id", id);
 
     if (currentUser.data[0].name !== name) {
-      await supabase.from('profile').update({ name: name }).eq('id', id);
+      await supabase.from("profile").update({ name: name }).eq("id", id);
     }
 
     if (currentUser.data[0].email !== email) {
-      // Replace supabase with serverless api here to update email 
+      // Replace supabase with serverless api here to update email
       const { data, error } = await supabase_admin.auth.admin.updateUserById(
         res.locals.id,
         {
@@ -103,26 +94,26 @@ const updateUser = async (req, res) => {
       if (error) {
         throw error;
       }
-      await supabase.from('profile').update({ email: email }).eq('id', id);
+      await supabase.from("profile").update({ email: email }).eq("id", id);
     }
 
-    res.status(200).send({ message: 'Profile updated' });
+    res.status(200).send({ message: "Profile updated" });
   } catch (err) {
     console.log(err);
     res.status(400).send({
-      message: 'Profile not updated',
+      message: "Profile not updated",
     });
   }
 };
 
 const updateAvatar = async (req, res) => {
   const form = new formidable.IncomingForm();
-  const imageFileType = ['image/jpeg', 'image/png', 'image/jpeg'];
+  const imageFileType = ["image/jpeg", "image/png", "image/jpeg"];
   const uploadFile = async () => {
     return new Promise((resolve, reject) => {
       form.parse(req, async function (err, fields, files) {
         let filepath = `${fields.id}/${files.file.originalFilename}`;
-        filepath = filepath.replace(/\s/g, '-'); // IN CASE YOU NEED TO REPLACE SPACE OF THE IMAGE NAME
+        filepath = filepath.replace(/\s/g, "-"); // IN CASE YOU NEED TO REPLACE SPACE OF THE IMAGE NAME
         const rawData = fs.readFileSync(files.file.filepath);
 
         if (!imageFileType.includes(files.file.mimetype)) {
@@ -130,7 +121,7 @@ const updateAvatar = async (req, res) => {
         }
 
         const { error } = await supabase.storage
-          .from('avatars')
+          .from("avatars")
           .upload(filepath, rawData, {
             contentType: files.file.mimetype,
             upsert: true,
@@ -141,11 +132,11 @@ const updateAvatar = async (req, res) => {
         }
 
         await supabase
-          .from('profile')
+          .from("profile")
           .update({
             avatar_url: `${SUPABASE_URL}/storage/v1/object/public/avatars/${filepath}`,
           })
-          .eq('id', fields.id);
+          .eq("id", fields.id);
 
         resolve({ success: true });
       });

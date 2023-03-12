@@ -1,34 +1,24 @@
-const { getUser } = require('./user');
-const supabase = require('../services/supabase').supabase;
-const supabase_admin = require('../services/supabase').supabase_admin;
+const supabase = require("../services/supabase").supabase;
 
 const getQuestions = async (req, res) => {
   let questions;
+  const email = req.query.email;
+
   const questionId = req.query?.id;
   try {
-    // Make sure jwt has the user information so that we can get the
-    // information to the user instead of using this function
-    const { data, error } = await supabase_admin.auth.admin.getUserById(
-      res.locals.id
-    );
-
-    if (error) {
-      throw error;
-    }
-
     const user = await supabase
-      .from('profile')
-      .select('*')
-      .eq('email', data.user.email)
+      .from("profile")
+      .select("*")
+      .eq("email", email)
       .limit(1);
 
     const size = await supabase
-      .from('questions')
-      .select('*', { count: 'exact', head: true });
+      .from("questions")
+      .select("*", { count: "exact", head: true });
 
     if (!questionId) {
       questions = await supabase
-        .from('results')
+        .from("results")
         .select(
           `
           questions (
@@ -39,11 +29,11 @@ const getQuestions = async (req, res) => {
           likes
         `
         )
-        .order('question_id', { ascending: true })
-        .eq('profile_id', user.data[0].id);
+        .order("question_id", { ascending: true })
+        .eq("profile_id", user.data[0].id);
     } else {
       questions = await supabase
-        .from('results')
+        .from("results")
         .select(
           `
         questions (
@@ -54,9 +44,9 @@ const getQuestions = async (req, res) => {
         likes
         `
         )
-        .order('question_id', { ascending: true })
-        .eq('question_id', req.query.id)
-        .eq('profile_id', user.data[0].id);
+        .order("question_id", { ascending: true })
+        .eq("question_id", req.query.id)
+        .eq("profile_id", user.data[0].id);
     }
 
     const results = questions.data.map((question) => {
@@ -70,7 +60,7 @@ const getQuestions = async (req, res) => {
       };
     });
 
-    if (questions.statusText !== 'OK') {
+    if (questions.statusText !== "OK") {
       throw questions.error;
     }
 
@@ -100,15 +90,15 @@ const completeQuestion = async (req, res) => {
 
   try {
     const { error } = await supabase
-      .from('results')
+      .from("results")
       .update({ is_completed: true })
-      .eq('result_id', id);
+      .eq("result_id", id);
 
     if (error) {
       throw error;
     }
 
-    res.status(200).send({ message: 'Question completed' });
+    res.status(200).send({ message: "Question completed" });
   } catch (err) {
     res.status(400).send({
       message: err,
@@ -123,18 +113,18 @@ const likeQuestion = async (req, res) => {
   try {
     if (likes < 5) {
       const { error } = await supabase
-        .from('results')
+        .from("results")
         .update({ likes: likes + 1 })
-        .eq('result_id', id);
+        .eq("result_id", id);
 
       if (error) {
         throw error;
       }
     } else {
-      throw 'You have reach the maximum number of likes';
+      throw "You have reach the maximum number of likes";
     }
 
-    res.status(200).send({ message: 'Like +1' });
+    res.status(200).send({ message: "Like +1" });
   } catch (err) {
     res.status(400).send({
       message: err,
