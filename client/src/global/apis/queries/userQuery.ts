@@ -7,7 +7,7 @@ export const userQuery = async (): Promise<User> => {
   let res
 
   if (hostName) {
-    res = await fetch(`${httpsProtocol}://${hostName}${apiRoutes.userHttpUrl}`)
+    res = await authFetch(`${httpsProtocol}://${hostName}${apiRoutes.userHttpUrl}`)
   } else {
     res = await authFetch(apiRoutes.userHttpUrl)
   }
