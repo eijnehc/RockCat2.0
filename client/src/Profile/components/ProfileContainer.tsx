@@ -1,15 +1,14 @@
 import { FC, FormEvent, useEffect, useState } from 'react'
 import toast, { Toaster } from 'react-hot-toast'
 
-import { useAuthAtom, useUserQuery } from '../../global'
+import { useUserQuery } from '../../global'
 import { useUpdateAvatarQuery, useUpdateUserQuery } from '../apis'
 
 import { ProfileView } from './ProfileView'
 
 export const ProfileContainer: FC = () => {
   const [isOpen, setIsOpen] = useState(false)
-  const [auth] = useAuthAtom('access_token')
-  const { user, isLoading, error, refetch } = useUserQuery(auth?.email)
+  const { user, isLoading, error, refetch } = useUserQuery()
   const { mutate: mutateUser, isSuccess: isUserSuccess } = useUpdateUserQuery()
   const { mutate: mutateAvatar, isSuccess: isAvatarSuccess } = useUpdateAvatarQuery()
 

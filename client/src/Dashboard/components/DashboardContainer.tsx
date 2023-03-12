@@ -34,7 +34,7 @@ export const DashboardContainer: FC = () => {
   const { questionId } = useParams()
   const navigate = useNavigate()
   const [auth] = useAuthAtom('access_token')
-  const { questions: question, isLoading, refetch } = useQuestionsQuery(auth?.email, Number(questionId))
+  const { questions: question, isLoading, refetch } = useQuestionsQuery(Number(questionId))
   const { mutate } = useCompleteQuestionQuery()
   const { mutate: upVote } = useLikeQuestionQuery()
   const [js, setJs] = useState<string>('')
