@@ -1,15 +1,15 @@
-import { FC } from 'react'
+// import { FC } from 'react'
 
 import { useMemo } from "react"
-import { Routes, Route, Navigate } from "react-router-dom"
-import { NewNote } from "./Journal/NewNote"
-import { useLocalStorageJournal } from "../../global/apis/hooks/useLocalStorage"
-import { NoteList } from "./Journal/NoteList"
-import { NoteLayout } from "./Journal/NoteLayout"
-import { Note } from "./Journal/Note"
-import { EditNote } from "./Journal/EditNote"
+import { Routes, Route, Navigate, Outlet } from "react-router-dom"
+import { NewNote } from "./components/Journal/NewNote"
+import { useLocalStorageJournal } from "../global/apis/hooks/useLocalStorage"
+import { NoteList } from "./components/Journal/NoteList"
+import { NoteLayout } from "./components/Journal/NoteLayout"
+import { Note } from "./components/Journal/Note"
+import { EditNote } from "./components/Journal/EditNote"
 
-import { JournalView } from './Journal/JournalView'
+import { JournalView } from './components/Journal/JournalView'
 
 // import { v4 as uuidV4 } from "uuid"
 
@@ -48,7 +48,7 @@ export type Tag = {
   label: string
 }
 
-export const JournalContainer: FC = () => {
+const JournalRouter = () => {
   const [notes, setNotes] = useLocalStorageJournal<RawNote[]>("NOTES", [])
   const [tags, setTags] = useLocalStorageJournal<Tag[]>("TAGS", [])
 
@@ -150,8 +150,10 @@ export const JournalContainer: FC = () => {
           />
         </Route>
       </Routes>
+      <Outlet />
     </>
   )
 }
 
-JournalContainer.displayName = 'JournalContainer'
+// JournalContainer.displayName = 'JournalContainer'
+export default JournalRouter

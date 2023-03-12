@@ -4,10 +4,13 @@ import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 
 import { Loader } from '../../../global'
+import { JournalEntryView } from './JournalEntryView'
+import { JournalListView } from './JournalListView'
 // import { QuestionsOverview } from '../interfaces'
 
 interface Props {
   // questions?: QuestionsOverview
+  // NewEntryTag: 'Create New Entry here.'
 }
 
 // enum DIFFICULTY {
@@ -46,36 +49,78 @@ interface Props {
 
 export const JournalView: FC<Props> = () => {
   return (
-    <QuestionsWrapper>
-      <Header>Questions </Header>
-      <QuestionsRow>
-        {/* {!questions ? (
-          <Loader />
-        ) : (
-          questions.data?.map((item) => (
-            <QuestionsContent
-              to={`dashboard/${item.id}`}
-              key={item.id}
-              style={{
-                background: `linear-gradient(to right, ${getColorDifficulty(
-                  item.difficulty
-                )} 10%, var(--color-white) ${difficultyLevel(item.difficulty)}`,
-              }}
-            >
-              <span>{item.title}</span>
-              <RightSection>
-                <span style={{ color: getColorDifficulty(item.difficulty) }}>{item.difficulty}</span>
-                {item.is_completed ? <CheckCircle color='var(--color-success)' /> : <UncheckedCircle />}
-              </RightSection>
-            </QuestionsContent>
-          ))
-        )} */}
-        {"Hi"}
-      </QuestionsRow>
-    </QuestionsWrapper>
+    // JournalListView will be list of records in future.
+    // - Use the same as questions
+    <Wrapper>
+      <JournalListView />
+      <JournalEntryView />
+      <JournalEntry
+        to={`entry/}`}
+        key={null}
+        style={{
+          // background: `linear-gradient(to right, ${getColorDifficulty(
+          //   item.difficulty
+          // )} 10%, var(--color-white) ${difficultyLevel(item.difficulty)}`,
+        }}
+      >
+        <span>{"Create new entry here."}</span>
+        {/* <RightSection>
+              <span style={{ color: getColorDifficulty(item.difficulty) }}>{item.difficulty}</span>
+              {item.is_completed ? <CheckCircle color='var(--color-success)' /> : <UncheckedCircle />}
+            </RightSection> */}
+      </JournalEntry>
+    </Wrapper>
+    // <QuestionsWrapper>
+    //   <Header>Questions </Header>
+    //   <QuestionsRow>
+    //     {/* {!questions ? (
+    //       <Loader />
+    //     ) : (
+    //       questions.data?.map((item) => (
+    //         <QuestionsContent
+    //           to={`dashboard/${item.id}`}
+    //           key={item.id}
+    //           style={{
+    //             background: `linear-gradient(to right, ${getColorDifficulty(
+    //               item.difficulty
+    //             )} 10%, var(--color-white) ${difficultyLevel(item.difficulty)}`,
+    //           }}
+    //         >
+    //           <span>{item.title}</span>
+    //           <RightSection>
+    //             <span style={{ color: getColorDifficulty(item.difficulty) }}>{item.difficulty}</span>
+    //             {item.is_completed ? <CheckCircle color='var(--color-success)' /> : <UncheckedCircle />}
+    //           </RightSection>
+    //         </QuestionsContent>
+    //       ))
+    //     )} */}
+
+    //   </QuestionsRow>
+    // </QuestionsWrapper>
+    // {{ <JournalView />}
+    // {<JournalEntryView />}}
   )
 }
 
+const Wrapper = styled.div`
+  padding: 1rem;
+`
+
+const JournalEntry = styled(Link)`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 1.5rem;
+  border-radius: 1rem;
+  color: var(--color-offblack);
+  cursor: pointer;
+
+  :hover {
+    span:first-child {
+      transform: scale(1.2);
+    }
+  }
+`
 const QuestionsWrapper = styled.main`
   display: flex;
   flex-direction: column;

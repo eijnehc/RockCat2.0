@@ -8,6 +8,7 @@ const PageNotFound = lazy(() => import('../pages/PageNotFound'))
 const ProfilePage = lazy(() => import('../../Profile/pages/ProfilePage'))
 const WelcomePage = lazy(() => import('../../Welcome/pages/WelcomePage'))
 const JournalPage = lazy(() => import('../../Journal/pages/JournalPage'))
+const JournalRouter = lazy(() => import('../../Journal/JournalRouter'))
 
 export const router = createBrowserRouter([
   {
@@ -31,8 +32,21 @@ export const router = createBrowserRouter([
     element: <ProfilePage />,
   },
   {
-    path: '/journal',
+    // path: 'journal/*',
+    // element: <JournalRouter />,
+    path: 'journal',
     element: <JournalPage />,
+    // loader: useRouteLoaderData,
+    children: [
+      {
+        path: 'journal/new',
+        element: <JournalPage />,
+      },
+      {
+        path: 'journal/:journalId',
+        element: <JournalPage />,
+      },
+    ]
   },
   {
     path: '*',

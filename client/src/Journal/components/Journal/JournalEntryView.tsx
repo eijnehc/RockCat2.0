@@ -70,7 +70,6 @@ export const JournalEntryView: FC<Props> = () => {
             </QuestionsContent>
           ))
         )} */}
-        {"Hi"}
       </QuestionsRow>
     </QuestionsWrapper>
   )
