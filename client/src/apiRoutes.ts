@@ -1,10 +1,7 @@
-const httpProtocol = 'http'
 const httpsProtocol = 'https'
-const hostName =
-  window.location.hostname === 'localhost' ? '' : 'RockcatASG-1-41790579.ap-southeast-1.elb.amazonaws.com'
+const hostName = window.location.hostname === 'localhost' ? '' : 'apis.rockcat.dev'
 
 export const apiSettings = {
-  httpProtocol,
   httpsProtocol,
   hostName,
 }

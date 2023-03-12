@@ -7,11 +7,11 @@ interface Props {
 }
 
 export const likeQuestionQuery = async ({ questionId, likes }: Props) => {
-  const { hostName, httpProtocol } = apiSettings
+  const { hostName, httpsProtocol } = apiSettings
   let res
 
   if (hostName) {
-    res = await authFetch(`${httpProtocol}://${hostName}${apiRoutes.likeQuestionHttpUrl}`, {
+    res = await authFetch(`${httpsProtocol}://${hostName}${apiRoutes.likeQuestionHttpUrl}`, {
       method: 'POST',
       body: JSON.stringify({ questionId, likes }),
     })

@@ -1,11 +1,11 @@
 import { apiRoutes, apiSettings } from '../../../apiRoutes'
 
 export const signUpQuery = async (sessionId: string) => {
-  const { hostName, httpProtocol } = apiSettings
+  const { hostName, httpsProtocol } = apiSettings
   let res
 
   if (hostName) {
-    res = await fetch(`${httpProtocol}://${hostName}${apiRoutes.signUpHttpUrl(sessionId)}`, {
+    res = await fetch(`${httpsProtocol}://${hostName}${apiRoutes.signUpHttpUrl(sessionId)}`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ session_id: sessionId }),

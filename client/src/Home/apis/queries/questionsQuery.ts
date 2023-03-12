@@ -4,11 +4,11 @@ import { QuestionsOverview } from '../../interfaces'
 
 export const questionsQuery = async (questionId?: number): Promise<QuestionsOverview> => {
   const query = questionId ? `?id=${questionId}` : ''
-  const { hostName, httpProtocol } = apiSettings
+  const { hostName, httpsProtocol } = apiSettings
   let res
 
   if (hostName) {
-    res = await fetch(`${httpProtocol}://${hostName}${apiRoutes.questionsHttpUrl(query)}`)
+    res = await fetch(`${httpsProtocol}://${hostName}${apiRoutes.questionsHttpUrl(query)}`)
   } else {
     res = await authFetch(apiRoutes.questionsHttpUrl(query))
   }

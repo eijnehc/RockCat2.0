@@ -3,11 +3,11 @@ import { User } from '../../interfaces'
 import { authFetch } from '../../utils'
 
 export const userQuery = async (): Promise<User> => {
-  const { hostName, httpProtocol } = apiSettings
+  const { hostName, httpsProtocol } = apiSettings
   let res
 
   if (hostName) {
-    res = await fetch(`${httpProtocol}://${hostName}${apiRoutes.userHttpUrl}`)
+    res = await fetch(`${httpsProtocol}://${hostName}${apiRoutes.userHttpUrl}`)
   } else {
     res = await authFetch(apiRoutes.userHttpUrl)
   }

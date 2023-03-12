@@ -2,11 +2,11 @@ import { apiRoutes, apiSettings } from '../../../apiRoutes'
 import { authFetch } from '../../../global'
 
 export const updateAvatarQuery = async (formData: FormData) => {
-  const { hostName, httpProtocol } = apiSettings
+  const { hostName, httpsProtocol } = apiSettings
   let res
 
   if (hostName) {
-    res = await authFetch(`${httpProtocol}://${hostName}${apiRoutes.updateAvatarHttpUrl}`, {
+    res = await authFetch(`${httpsProtocol}://${hostName}${apiRoutes.updateAvatarHttpUrl}`, {
       method: 'POST',
       body: formData,
     })
